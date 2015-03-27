@@ -1,7 +1,9 @@
 package com.gcit.training.library.dao;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.List;
 
 import com.gcit.training.library.domain.Borrower;
 public class BorrowerDAO extends BaseDAO {
@@ -23,5 +25,11 @@ public class BorrowerDAO extends BaseDAO {
 	public void delete(Borrower borrower) throws SQLException {
 		save("delete from tbl_borrower where cardNo = ?",
 				new Object[] { borrower.getCardNo() });
+	}
+
+	@Override
+	public List<?> mapResult(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

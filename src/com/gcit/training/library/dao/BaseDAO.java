@@ -5,6 +5,7 @@ import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
 import java.sql.Types;
+import java.util.List;
 
 public abstract class BaseDAO {
 	protected Connection conn = null;
@@ -32,6 +33,19 @@ public abstract class BaseDAO {
 		stmt.execute();
 	}
 
+	public List<?> read(String query) throws SQLException {
+		return read(query, null);
+	}
+
+
+	public List<?> read(String query, Object[] vals) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement(query);
+		if(vals != null)
+			loopStatement(vals, stmt);
+		ResultSet rs = stmt.executeQuery();
+		return mapResult(rs);
+	}
+
 	private void loopStatement(Object[] vals, PreparedStatement stmt)
 			throws SQLException {
 		int loop = 1;
@@ -44,7 +58,7 @@ public abstract class BaseDAO {
 			loop++;
 		}
 	}
+	
+	public abstract List<?> mapResult(ResultSet rs) throws SQLException; 
 
 }
-
-

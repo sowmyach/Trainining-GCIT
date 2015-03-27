@@ -1,8 +1,11 @@
 package com.gcit.training.library.dao;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
 
+
+import java.util.List;
 
 import com.gcit.training.library.domain.Genre;
 
@@ -25,6 +28,12 @@ public class GenreDAO extends BaseDAO {
 	public void delete(Genre genre) throws SQLException {
 		save("delete from tbl_genre where genre_id = ?",
 				new Object[] { genre.getGenreId() });
+	}
+
+	@Override
+	public List<?> mapResult(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }
 

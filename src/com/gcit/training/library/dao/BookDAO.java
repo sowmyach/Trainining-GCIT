@@ -1,7 +1,10 @@
 package com.gcit.training.library.dao;
 
 import java.sql.Connection;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
+import java.util.List;
 
 import com.gcit.training.library.domain.Author;
 import com.gcit.training.library.domain.Book;
@@ -43,7 +46,31 @@ public class BookDAO extends BaseDAO {
 			save("delete from tbl_book where bookId = ? ",
 					new Object[] { book.getBookId()});
 		}
+	
+@Override
+public List<Book> mapResult(ResultSet rs) throws SQLException {
+		List<Book> list = new ArrayList<Book>();
+
+	AuthorDAO aDAO = new AuthorDAO(conn);
+	PublisherDAO pDAO = new PublisherDAO(conn);
+	while (rs.next()) {
+		Book b = new Book();
+		b.setBookId(rs.getInt("bookId"));
+		b.setTitle(rs.getString("title"));
+
+		List<Author> authorList = (List<Author>) aDAO.read("select * from tbl_book where bookId in (select authorId from tbl_book_authors where bookId = ?",
+				new Object[] { b.getBookId() });
+		b.setAuthors(authorList);
+		
+	
+		
+		b.setPublisher(pDAO.getOne(rs.getInt("publisherId")));
+
+		list.add(b);
 	}
+	return list;
+}
+}
 
 
 

@@ -17,6 +17,7 @@ public class Book extends AbstractDomian{
 	private List<Author>authors;
 	private Publisher publisher;
 	private List<Genre> genres;
+	
 	public int getBookId() {
 		return bookId;
 	}
