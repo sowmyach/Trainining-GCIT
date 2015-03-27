@@ -3,7 +3,7 @@ package com.gcit.training.library.dao;
 import java.sql.Connection;
 import java.sql.SQLException;
 
-import com.gcit.training.library.domain.Genre;
+
 import com.gcit.training.library.domain.LibraryBranch;
 
 public class LibraryBranchDAO extends BaseDAO {
@@ -13,7 +13,7 @@ public class LibraryBranchDAO extends BaseDAO {
 	}
 
 	public void create(LibraryBranch libraryBranch) throws SQLException {
-		save("insert into tbl_library_branch (branchName,branchAddress) values (?,?,?)",
+		save("insert into tbl_library_branch (branchName,branchAddress) values (?,?)",
 				new Object[] { libraryBranch.getBranchName(),libraryBranch.getBranchAddress() });
 	}
 
@@ -22,8 +22,8 @@ public class LibraryBranchDAO extends BaseDAO {
 				new Object[] { libraryBranch.getBranchName(),libraryBranch.getBranchAddress(),libraryBranch.getBranchId()});
 	}
 
-	public void delete(Genre genre) throws SQLException {
-		save("delete from tbl_genre where genre_id = ?",
-				new Object[] { genre.getGenreId() });
+	public void delete(LibraryBranch libraryBranch) throws SQLException {
+		save("delete from tbl_library_branch where branchId = ? ",
+				new Object[] { libraryBranch.getBranchId()});
 	}
 }

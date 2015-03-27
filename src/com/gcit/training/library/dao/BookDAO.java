@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import com.gcit.training.library.domain.Author;
 import com.gcit.training.library.domain.Book;
 
+
 public class BookDAO extends BaseDAO {
 
 	public BookDAO(Connection connection) {
@@ -34,8 +35,15 @@ public class BookDAO extends BaseDAO {
 	}
 
 	public void update(Book book) throws SQLException {
+			save("update tbl_book set title = ? where bookId = ?",
+					new Object[] { book.getTitle(),book.getBookId()});
+		}
+
+		public void delete(Book book) throws SQLException {
+			save("delete from tbl_book where bookId = ? ",
+					new Object[] { book.getBookId()});
+		}
 	}
 
-	public void delete(Book book) throws SQLException {
-	}
-}
+
+

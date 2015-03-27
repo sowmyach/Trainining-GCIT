@@ -11,7 +11,6 @@ public class Book extends AbstractDomian{
 	/**
 	 * 
 	 */
-
 	
 	private int bookId;
 	private String title;
