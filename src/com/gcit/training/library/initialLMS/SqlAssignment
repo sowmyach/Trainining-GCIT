@@ -1,0 +1,40 @@
+Q1) select tb.noofcopies
+	from tbl_book_copies tb
+	join tbl_book t1 on tb.bookid=t1.bookid
+	join tbl_library_branch t2 on tb.branchid=t2.branchid
+	where t1.title='tweak' and t2.branchname='hyderabad';
+	
+Q2) select tb.noofcopies,t2.branchname
+	from tbl_book_copies tb
+	join tbl_library_branch t2 on tb.branchid=t2.branchid
+	join tbl_book t1 on tb.bookid=t1.bookid
+	where t1.title='time machine' 
+
+Q3) select tbo.name
+	from tbl_borrower tbo where tbo.cardno
+	not in (select bl. cardno from tbl_book_loans bl)
+
+Q4) select tb.title,tbo.name,tbo.address from
+	tbl_borrower tbo join
+	tbl_book_loans tbl on 
+	tbl.cardno=tbo.cardno
+	join tbl_book tb on tb.bookid=tbl.bookid where 
+	duedate=curdate() and tb.title="prime time";
+
+Q5) select lb.branchname,sum(bl.bookid)
+	from tbl_library_branch lb
+	join tbl_book_loans bl on bl.branchid=lb.branchid
+
+Q6) select name,address,count(tl.bookid)
+	from tbl_borrower tbo
+	join tbl_book_loans tl on tl.cardno=tbo.cardno
+	group by tbo.name
+	having count(bookid)>5
+
+Q7) select tb.title,bc.noofcopies
+	from tbl_book_copies bc
+	join tbl_book tb on tb.bookid=bc.bookid
+	join tbl_book_authors tba on tba.bookid=tb.bookid
+	join tbl_author ta on ta.authorId=tba.authorId
+	join tbl_library_branch t1 on t1.branchid=bc.branchid
+	where authorname='randy' and t1.branchname='hyderabad';
