@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.gcit.training.library.domain.Author;
 
-public class AuthorDAO extends BaseDAO {
+public class AuthorDAO extends BaseDAO<Author> {
 
 	public AuthorDAO(Connection connection) {
 		this.conn = connection;
@@ -29,7 +29,7 @@ public class AuthorDAO extends BaseDAO {
 				new Object[] { author.getAuthorId() });
 	}
 	public List<Author> getAll() throws SQLException {
-		return (List<Author>) read("select * from tbl_author");
+		return  (List<Author>) read("select * from tbl_author");
 	}
 
 	public Author getOne(int authorId) throws SQLException {

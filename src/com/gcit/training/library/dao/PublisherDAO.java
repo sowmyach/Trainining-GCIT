@@ -8,7 +8,7 @@ import java.util.List;
 
 import com.gcit.training.library.domain.Publisher;
 
-public class PublisherDAO extends BaseDAO {
+public class PublisherDAO extends BaseDAO<Publisher>{
 	public PublisherDAO(Connection connection) {
 		this.conn = connection; {
 }

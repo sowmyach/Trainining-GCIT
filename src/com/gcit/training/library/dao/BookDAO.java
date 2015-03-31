@@ -10,7 +10,7 @@ import com.gcit.training.library.domain.Author;
 import com.gcit.training.library.domain.Book;
 
 
-public class BookDAO extends BaseDAO {
+public class BookDAO extends BaseDAO<Book> {
 
 	public BookDAO(Connection connection) {
 		this.conn = connection;
@@ -48,7 +48,7 @@ public class BookDAO extends BaseDAO {
 		}
 	
 @Override
-public List<Book> mapResult(ResultSet rs) throws SQLException {
+        public List<Book> mapResult(ResultSet rs) throws SQLException {
 		List<Book> list = new ArrayList<Book>();
 
 	AuthorDAO aDAO = new AuthorDAO(conn);

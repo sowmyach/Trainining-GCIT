@@ -34,6 +34,10 @@ public class AdminstratorBookAuthor {
 			AdminUpdateBook auBook=new AdminUpdateBook();
 			auBook.adminUpdateBook();
 				}
+		if(input==2){
+			AdminDeleteBook adBook=new AdminDeleteBook();
+			adBook.adminDeleteBook();
+				}
 		}
 		}
 		if(input==2){ {
@@ -53,6 +57,10 @@ public class AdminstratorBookAuthor {
 			if(input==2){
 				AdminUpdateAuthor auAuth=new AdminUpdateAuthor();
 				auAuth.adminUpdateAuthor();
+					}
+			if(input==2){
+				AdminDeleteAuthor adAuth=new AdminDeleteAuthor();
+				adAuth.adminDeleteAuthor();
 					}
 			
 		}

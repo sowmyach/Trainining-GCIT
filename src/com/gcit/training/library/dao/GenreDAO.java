@@ -5,11 +5,15 @@ import java.sql.ResultSet;
 import java.sql.SQLException;
 
 
+import java.util.ArrayList;
 import java.util.List;
 
+import com.gcit.training.library.domain.Author;
+import com.gcit.training.library.domain.Book;
+import com.gcit.training.library.domain.Borrower;
 import com.gcit.training.library.domain.Genre;
 
-public class GenreDAO extends BaseDAO {
+public class GenreDAO extends BaseDAO<Genre> {
 
 	public GenreDAO(Connection connection) {
 		this.conn = connection;
@@ -31,9 +35,24 @@ public class GenreDAO extends BaseDAO {
 	}
 
 	@Override
-	public List<?> mapResult(ResultSet rs) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Genre> mapResult(ResultSet rs) throws SQLException {
+		List<Genre> list = new ArrayList<Genre>();
+		BookDAO bDAO = new BookDAO(conn);
+		while (rs.next()) {
+			Genre g = new Genre();
+			//Book b = new Book();
+			//b.setBookId(1);
+			//g.setBook(b);
+			g.setGenreId(rs.getInt("cardNo"));
+			g.setGenreName(rs.getString("borrowerName"));
+			List<Book> bookList = (List<Book>) bDAO.read("select *  from tbl_book_genre where bookId in (select title from tbl_book where bookId = ?",
+			new Object[] {((Book) g.getBooks()).getBookId() });
+			g.setBooks(bookList);
+			
+
+			list.add(g);
+		}
+		return list;
 	}
 }
 

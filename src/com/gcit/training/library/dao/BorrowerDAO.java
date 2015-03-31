@@ -3,10 +3,12 @@ package com.gcit.training.library.dao;
 import java.sql.Connection;
 import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 
 import com.gcit.training.library.domain.Borrower;
-public class BorrowerDAO extends BaseDAO {
+import com.gcit.training.library.domain.Publisher;
+public class BorrowerDAO extends BaseDAO<Borrower> {
 	public BorrowerDAO(Connection connection) {
 		this.conn = connection; {
 }
@@ -28,8 +30,17 @@ public class BorrowerDAO extends BaseDAO {
 	}
 
 	@Override
-	public List<?> mapResult(ResultSet rs) throws SQLException {
-		// TODO Auto-generated method stub
-		return null;
+	public List<Borrower> mapResult(ResultSet rs) throws SQLException {
+		List<Borrower> list = new ArrayList<Borrower>();
+		while (rs.next()) {
+			Borrower bo = new Borrower();
+			bo.setCardNo(rs.getInt("cardNo"));
+			bo.setBorrowerName(rs.getString("borrowerName"));
+			bo.setBorrowerAddress(rs.getString("borrowerAddress"));
+			bo.setBorrowerPhone(rs.getString("borrowerPhone"));
+
+			list.add(bo);
+		}
+		return list;
 	}
 }

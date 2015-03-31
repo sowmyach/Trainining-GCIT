@@ -28,6 +28,8 @@ public class Administrator {
 			adminPub.adminPublisher();						
 		}
 		if(input==3){
+			AdministratorLibraryBranches adminLibBranch=new AdministratorLibraryBranches();
+			adminLibBranch.adminLibraryBranches();	
 			
 			
 			

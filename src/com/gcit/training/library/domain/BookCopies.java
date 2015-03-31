@@ -11,8 +11,7 @@ public class BookCopies extends AbstractDomian{
 	 */	
 	private Book book;
 	private int noOfCopies;
-	private LibraryBranch branches;
-	
+	private LibraryBranch branches;	
 	public Book getBook() {
 		return book;
 	}
