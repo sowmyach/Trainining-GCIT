@@ -63,5 +63,11 @@ public class LibraryBranchDAO extends BaseDAO<LibraryBranch> {
 		return list;
 	
 	}
+
+	@Override
+	public List<?> mapFirstLevelResult(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
+	}
 	}
 

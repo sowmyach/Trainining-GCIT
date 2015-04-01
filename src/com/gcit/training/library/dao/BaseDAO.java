@@ -38,6 +38,13 @@ public abstract class BaseDAO<T> {
 	}
 
 
+	public List<?> readFirstLevel(String query, Object[] vals) throws SQLException {
+		PreparedStatement stmt = conn.prepareStatement(query);
+		if(vals != null)
+			loopStatement(vals, stmt);
+		ResultSet rs = stmt.executeQuery();
+		return mapFirstLevelResult(rs);
+	}
 	public List<?> read(String query, Object[] vals) throws SQLException {
 		PreparedStatement stmt = conn.prepareStatement(query);
 		if(vals != null)
@@ -59,6 +66,8 @@ public abstract class BaseDAO<T> {
 		}
 	}
 	
-	public abstract List<?> mapResult(ResultSet rs) throws SQLException; 
+	public abstract List<?> mapFirstLevelResult(ResultSet rs) throws SQLException; 
 
+
+public abstract List<?> mapResult(ResultSet rs) throws SQLException; 
 }

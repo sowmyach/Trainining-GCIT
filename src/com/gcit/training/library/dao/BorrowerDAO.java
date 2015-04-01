@@ -6,6 +6,7 @@ import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
+import com.gcit.training.library.domain.BookLoan;
 import com.gcit.training.library.domain.Borrower;
 import com.gcit.training.library.domain.Publisher;
 public class BorrowerDAO extends BaseDAO<Borrower> {
@@ -28,6 +29,21 @@ public class BorrowerDAO extends BaseDAO<Borrower> {
 		save("delete from tbl_borrower where cardNo = ?",
 				new Object[] { borrower.getCardNo() });
 	}
+	public List<Borrower> getAll() throws SQLException {
+		return  (List<Borrower>) read("select * from tbl_borrower");
+	}
+
+	public Borrower getOne(int cardNo) throws SQLException {
+		List<Borrower> list = (List<Borrower>) read(
+				"select * from tbl_borrower where cardNo=?",
+				new Object[] { cardNo });
+		
+		if(list != null && list.size() > 0) {
+			return list.get(0);
+		} else {
+			return null;
+		}
+	}
 
 	@Override
 	public List<Borrower> mapResult(ResultSet rs) throws SQLException {
@@ -42,5 +58,11 @@ public class BorrowerDAO extends BaseDAO<Borrower> {
 			list.add(bo);
 		}
 		return list;
+	}
+
+	@Override
+	public List<?> mapFirstLevelResult(ResultSet rs) throws SQLException {
+		// TODO Auto-generated method stub
+		return null;
 	}
 }

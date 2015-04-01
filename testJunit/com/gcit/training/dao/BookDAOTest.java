@@ -11,6 +11,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import com.gcit.training.library.dao.AuthorDAO;
+import com.gcit.training.library.dao.BookCopiesDAO;
 import com.gcit.training.library.dao.BookDAO;
 import com.gcit.training.library.domain.Author;
 import com.gcit.training.library.domain.Book;
@@ -32,14 +33,16 @@ private Connection conn;
 
 	@Test
 	public void testCreate() throws SQLException {
+		Book book=new Book();
+		book.setTitle("2states");
+		new BookDAO(conn).create(book);
+		
+		Author author=new Author();
+		author.setAuthorName("helen");
+		new AuthorDAO(conn).create(author);
 		try {
-			Book book=new Book();
-			book.setTitle("2states");
-			new BookDAO(conn).create(book);
+			new BookDAO(conn).create(book);	
 			
-			Author author=new Author();
-			author.setAuthorName("helen");
-			new AuthorDAO(conn).create(author);
 			
 			conn.commit();
 		} catch (SQLException e) {

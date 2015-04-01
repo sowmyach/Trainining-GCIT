@@ -4,21 +4,15 @@ import static org.junit.Assert.*;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
-import java.sql.ResultSet;
 import java.sql.SQLException;
-import java.util.ArrayList;
-import java.util.List;
-
 import org.junit.After;
 import org.junit.Before;
 import org.junit.Test;
 
-import com.gcit.training.library.dao.AuthorDAO;
 import com.gcit.training.library.dao.BookCopiesDAO;
-import com.gcit.training.library.dao.PublisherDAO;
-import com.gcit.training.library.domain.Author;
 import com.gcit.training.library.domain.Book;
 import com.gcit.training.library.domain.BookCopies;
+import com.gcit.training.library.domain.LibraryBranch;
 
 public class BookCopiesDAOTest {
 
@@ -39,17 +33,38 @@ private Connection conn;
 	@Test
 	public void testCreate() throws SQLException {
 		
+			BookCopies bookCopies=new BookCopies();
+			bookCopies.setNoOfCopies(1);			
+			
+			Book book=new Book();
+			book.setBookId(4);
+			bookCopies.setBook(book);
+						
+			LibraryBranch libraryBranch=new LibraryBranch();
+			libraryBranch.setBranchId(4);
+			bookCopies.setBranches(libraryBranch);			
+					
+			try {	
+			new BookCopiesDAO(conn).create(bookCopies);			
+			conn.commit();
+		} catch (SQLException e) {
+			conn.rollback();
+			e.printStackTrace();
+			fail("BookCopies create failed!"); 
+		}		
 	}
-
 	@Test
 	public void testUpdate() throws SQLException {
 		BookCopies bookCopies=new BookCopies();
-		
 		bookCopies.setNoOfCopies(1);
 		
-		Book b = new Book();
-		b.setBookId(2);
-		bookCopies.setBook(b);
+		Book book= new Book();
+		book.setBookId(2);
+		bookCopies.setBook(book);
+		
+		LibraryBranch libraryBranch=new LibraryBranch();
+		libraryBranch.setBranchId(2);
+		bookCopies.setBranches(libraryBranch);	
 		
 		try {
 			new BookCopiesDAO(conn).update(bookCopies);
@@ -60,13 +75,17 @@ private Connection conn;
 			fail("Book  Copies update failed!");   
 		}
 	}
-
 	@Test
 	public void testDelete() throws SQLException {
 		BookCopies bookCopies=new BookCopies();
+		
 		Book b = new Book();
 		b.setBookId(2);
-		bookCopies.setBook(b);
+		bookCopies.setBook(b);	
+		
+		LibraryBranch libraryBranch=new LibraryBranch();
+		libraryBranch.setBranchId(2);
+		bookCopies.setBranches(libraryBranch);	
 		
 		try {
 			new BookCopiesDAO(conn).delete(bookCopies);
@@ -76,23 +95,7 @@ private Connection conn;
 			e.printStackTrace();
 			fail("Book Copies delete failed!"); 
 		}
-	}
-	public List<BookCopies> mapResult(ResultSet rs) throws SQLException {
-		List<BookCopies> list = new ArrayList<BookCopies>();
-	BookCopiesDAO bcDAO = new BookCopiesDAO(conn);	
-	while (rs.next()) {
-		BookCopies bc = new BookCopies();
-		bc.setNoOfCopies(7);
-		List<Author> authorList = (List<Author>) aDAO.read("select * from tbl_book where bookId in (select authorId from tbl_book_authors where bookId = ?",
-				new Object[] { b.getBookId() });
-		b.setAuthors(authorList);
-		
-	
-		
-		b.setPublisher(pDAO.getOne(rs.getInt("publisherId")));
-
-		list.add(b);
-	
+	}	
 	@After
 	public void destroy() throws SQLException {
 		conn.close();
